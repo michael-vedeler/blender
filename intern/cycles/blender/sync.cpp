@@ -803,6 +803,9 @@ void BlenderSync::sync_render_passes(blender::RenderLayer &b_rlay,
   if ((b_view_layer.cryptomatte_flag & blender::VIEW_LAYER_CRYPTOMATTE_ASSET) != 0) {
     cryptomatte_passes = (CryptomatteType)(cryptomatte_passes | CRYPT_ASSET);
   }
+  if ((b_view_layer.cryptomatte_flag & blender::VIEW_LAYER_CRYPTOMATTE_INDIRECT_LIGHT) != 0) {
+    cryptomatte_passes = (CryptomatteType)(cryptomatte_passes | CRYPT_INDIRECT_LIGHT);
+  }
   scene->film->set_cryptomatte_passes(cryptomatte_passes);
 
   unordered_set<string> expected_passes;

@@ -239,6 +239,9 @@ def list_render_passes(scene, srl):
     if srl.use_pass_cryptomatte_asset:
         for i in range(0, crypto_depth):
             yield ("CryptoAsset" + '{:02d}'.format(i), "rgba", 'COLOR')
+    if srl.use_pass_cryptomatte_indirect_light:
+        for i in range(0, crypto_depth):
+            yield ("CryptoIndirectLight" + '{:02d}'.format(i), "rgba", 'COLOR')
 
     # Denoising passes.
     if scene.cycles.use_denoising and crl.use_denoising:

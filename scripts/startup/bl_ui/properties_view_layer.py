@@ -243,6 +243,21 @@ class VIEWLAYER_PT_layer_passes_cryptomatte(ViewLayerCryptomattePanelHelper, Pan
     bl_parent_id = "VIEWLAYER_PT_layer_passes"
     COMPAT_ENGINES = {'BLENDER_EEVEE'}
 
+class VIEWLAYER_PT_layer_passes_cryptomatte_light(ViewLayerButtonsPanel, Panel):
+    bl_label = "Light Cryptomatte"
+    bl_parent_id = "VIEWLAYER_PT_layer_passes_cryptomatte"
+    COMPAT_ENGINES = {'BLENDER_EEVEE', 'CYCLES'}
+    bl_options = {'DEFAULT_CLOSED'}
+
+    def draw(self, context):
+        layout = self.layout
+        layout.use_property_split = True
+        layout.use_property_decorate = False
+        view_layer = context.view_layer
+
+        col = layout.column()
+        col.prop(view_layer, "use_pass_cryptomatte_indirect_light", text="Indirect Light")
+
 
 class VIEWLAYER_MT_lightgroup_sync(Menu):
     bl_label = "Lightgroup Sync"
@@ -348,6 +363,7 @@ classes = (
     VIEWLAYER_PT_eevee_layer_passes_data,
     VIEWLAYER_PT_eevee_layer_passes_light,
     VIEWLAYER_PT_layer_passes_cryptomatte,
+    VIEWLAYER_PT_layer_passes_cryptomatte_light,
     VIEWLAYER_PT_layer_passes_aov,
     VIEWLAYER_PT_layer_passes_lightgroups,
     VIEWLAYER_PT_filter,

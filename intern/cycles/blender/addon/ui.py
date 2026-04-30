@@ -1138,6 +1138,21 @@ class CYCLES_RENDER_PT_passes_crypto(CyclesButtonsPanel, ViewLayerCryptomattePan
     bl_context = "view_layer"
     bl_parent_id = "CYCLES_RENDER_PT_passes"
 
+class CYCLES_RENDER_PT_passes_crypto_light(CyclesButtonsPanel, Panel):
+    bl_label = "Light Cryptomatte"
+    bl_parent_id = "CYCLES_RENDER_PT_passes_crypto"
+    bl_context = "view_layer"
+    bl_options = {'DEFAULT_CLOSED'}
+
+    def draw(self, context):
+        layout = self.layout
+        layout.use_property_split = True
+        layout.use_property_decorate = False
+        view_layer = context.view_layer
+
+        col = layout.column()
+        col.prop(view_layer, "use_pass_cryptomatte_indirect_light", text="Indirect Light")
+
 
 class CYCLES_RENDER_PT_passes_aov(CyclesButtonsPanel, ViewLayerAOVPanelHelper, Panel):
     bl_label = "Shader AOV"
@@ -2603,6 +2618,7 @@ classes = (
     CYCLES_RENDER_PT_passes_data,
     CYCLES_RENDER_PT_passes_light,
     CYCLES_RENDER_PT_passes_crypto,
+    CYCLES_RENDER_PT_passes_crypto_light,
     CYCLES_RENDER_PT_passes_aov,
     CYCLES_RENDER_PT_passes_lightgroups,
     CYCLES_RENDER_PT_filter,

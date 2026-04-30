@@ -720,6 +720,14 @@ void RNA_def_view_layer(BlenderRNA *brna)
       prop, "Grease Pencil", "Deliver Grease Pencil render result in a separate pass");
   RNA_def_property_update(prop, NC_SCENE | ND_RENDER_OPTIONS, "rna_ViewLayer_pass_update");
 
+  /* Light Cryptomatte */
+  prop = RNA_def_property(srna, "use_pass_cryptomatte_indirect_light", PROP_BOOLEAN, PROP_NONE);
+  RNA_def_property_boolean_sdna(
+      prop, nullptr, "cryptomatte_flag", VIEW_LAYER_CRYPTOMATTE_INDIRECT_LIGHT);
+  RNA_def_property_ui_text(
+      prop, "Indirect Light", "Render indirect lightbleed cryptomatte pass");
+  RNA_def_property_update(prop, NC_SCENE | ND_RENDER_OPTIONS, "rna_ViewLayer_pass_update");
+
   /* debug update routine */
   func = RNA_def_function(srna, "update", "rna_ViewLayer_update_tagged");
   RNA_def_function_flag(func, FUNC_USE_SELF_ID | FUNC_USE_MAIN | FUNC_USE_REPORTS);

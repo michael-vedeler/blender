@@ -5,6 +5,7 @@
 #pragma once
 
 #include "kernel/film/write.h"
+#include "kernel/film/cryptomatte_passes.h"
 
 #include "kernel/integrator/shadow_catcher.h"
 
