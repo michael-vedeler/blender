@@ -119,6 +119,7 @@ ccl_device bool integrator_init_from_camera(KernelGlobals kg,
   if (tile == nullptr) {
     /* Re-initialize path state for path integration. */
     path_state_init_integrator(kg, state, sample, rng_pixel, T);
+    INTEGRATOR_STATE_WRITE(state, path, indirect_crypto_id) = 0.0f;
     integrator_path_next(state,
                          DEVICE_KERNEL_INTEGRATOR_INIT_FROM_CAMERA,
                          kernel_data.cam.is_inside_volume ?
@@ -128,6 +129,7 @@ ccl_device bool integrator_init_from_camera(KernelGlobals kg,
   else {
     /* Initialize path state for path integration. */
     path_state_init_integrator(kg, state, sample, rng_pixel, T);
+    INTEGRATOR_STATE_WRITE(state, path, indirect_crypto_id) = 0.0f;
 
     /* Continue with intersect_closest kernel, optionally initializing volume
      * stack before that if the camera may be inside a volume. */

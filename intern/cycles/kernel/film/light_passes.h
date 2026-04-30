@@ -510,6 +510,18 @@ ccl_device_inline void film_write_direct_light(KernelGlobals kg,
   /* Direct light shadow. */
   film_write_combined_pass(kg, path_flag, sample, contribution, buffer);
 
+  if (kernel_data.film.cryptomatte_passes & CRYPT_INDIRECT_LIGHT) {
+    const float stored_id = INTEGRATOR_STATE(state, shadow_path, indirect_crypto_id);
+    if (stored_id != 0.0f && INTEGRATOR_STATE(state, shadow_path, bounce) > 0) {
+      ccl_global float *crypto_buffer = buffer + kernel_data.film.pass_cryptomatte;
+      if (kernel_data.film.cryptomatte_passes & CRYPT_OBJECT) crypto_buffer += kernel_data.film.cryptomatte_depth * 4;
+      if (kernel_data.film.cryptomatte_passes & CRYPT_MATERIAL) crypto_buffer += kernel_data.film.cryptomatte_depth * 4;
+      if (kernel_data.film.cryptomatte_passes & CRYPT_ASSET) crypto_buffer += kernel_data.film.cryptomatte_depth * 4;
+      
+      film_write_cryptomatte_slots(crypto_buffer, 2 * kernel_data.film.cryptomatte_depth, stored_id, average(contribution));
+    }
+  }
+
 #ifdef __PASSES__
   if (kernel_data.film.light_pass_flag & PASS_ANY) {
     const uint32_t path_flag = INTEGRATOR_STATE(state, shadow_path, flag);
@@ -639,6 +651,19 @@ ccl_device_inline void film_write_background(KernelGlobals kg,
     const int sample = INTEGRATOR_STATE(state, path, sample);
     film_write_combined_transparent_pass(kg, path_flag, sample, contribution, transparent, buffer);
   }
+
+  if (kernel_data.film.cryptomatte_passes & CRYPT_INDIRECT_LIGHT) {
+    const float stored_id = INTEGRATOR_STATE(state, path, indirect_crypto_id);
+    if (stored_id != 0.0f && INTEGRATOR_STATE(state, path, bounce) > 0) {
+      ccl_global float *crypto_buffer = buffer + kernel_data.film.pass_cryptomatte;
+      if (kernel_data.film.cryptomatte_passes & CRYPT_OBJECT) crypto_buffer += kernel_data.film.cryptomatte_depth * 4;
+      if (kernel_data.film.cryptomatte_passes & CRYPT_MATERIAL) crypto_buffer += kernel_data.film.cryptomatte_depth * 4;
+      if (kernel_data.film.cryptomatte_passes & CRYPT_ASSET) crypto_buffer += kernel_data.film.cryptomatte_depth * 4;
+      
+      film_write_cryptomatte_slots(crypto_buffer, 2 * kernel_data.film.cryptomatte_depth, stored_id, average(contribution));
+    }
+  }
+
   film_write_emission_or_background_pass(kg,
                                          state,
                                          contribution,
@@ -662,6 +687,19 @@ ccl_device_inline void film_write_volume_emission(KernelGlobals kg,
   const int sample = INTEGRATOR_STATE(state, path, sample);
 
   film_write_combined_pass(kg, path_flag, sample, contribution, buffer);
+
+  if (kernel_data.film.cryptomatte_passes & CRYPT_INDIRECT_LIGHT) {
+    const float stored_id = INTEGRATOR_STATE(state, path, indirect_crypto_id);
+    if (stored_id != 0.0f && INTEGRATOR_STATE(state, path, bounce) > 0) {
+      ccl_global float *crypto_buffer = buffer + kernel_data.film.pass_cryptomatte;
+      if (kernel_data.film.cryptomatte_passes & CRYPT_OBJECT) crypto_buffer += kernel_data.film.cryptomatte_depth * 4;
+      if (kernel_data.film.cryptomatte_passes & CRYPT_MATERIAL) crypto_buffer += kernel_data.film.cryptomatte_depth * 4;
+      if (kernel_data.film.cryptomatte_passes & CRYPT_ASSET) crypto_buffer += kernel_data.film.cryptomatte_depth * 4;
+      
+      film_write_cryptomatte_slots(crypto_buffer, 2 * kernel_data.film.cryptomatte_depth, stored_id, average(contribution));
+    }
+  }
+
   film_write_emission_or_background_pass(
       kg, state, contribution, buffer, kernel_data.film.pass_emission, lightgroup);
 }
@@ -681,6 +719,19 @@ ccl_device_inline void film_write_surface_emission(KernelGlobals kg,
   const int sample = INTEGRATOR_STATE(state, path, sample);
 
   film_write_combined_pass(kg, path_flag, sample, contribution, buffer);
+
+  if (kernel_data.film.cryptomatte_passes & CRYPT_INDIRECT_LIGHT) {
+    const float stored_id = INTEGRATOR_STATE(state, path, indirect_crypto_id);
+    if (stored_id != 0.0f && INTEGRATOR_STATE(state, path, bounce) > 0) {
+      ccl_global float *crypto_buffer = buffer + kernel_data.film.pass_cryptomatte;
+      if (kernel_data.film.cryptomatte_passes & CRYPT_OBJECT) crypto_buffer += kernel_data.film.cryptomatte_depth * 4;
+      if (kernel_data.film.cryptomatte_passes & CRYPT_MATERIAL) crypto_buffer += kernel_data.film.cryptomatte_depth * 4;
+      if (kernel_data.film.cryptomatte_passes & CRYPT_ASSET) crypto_buffer += kernel_data.film.cryptomatte_depth * 4;
+      
+      film_write_cryptomatte_slots(crypto_buffer, 2 * kernel_data.film.cryptomatte_depth, stored_id, average(contribution));
+    }
+  }
+
   film_write_emission_or_background_pass(
       kg, state, contribution, buffer, kernel_data.film.pass_emission, lightgroup);
 }

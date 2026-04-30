@@ -253,6 +253,8 @@ integrate_direct_light_shadow_init_common(KernelGlobals kg,
   INTEGRATOR_STATE_WRITE(shadow_state, shadow_path, glossy_bounce) = INTEGRATOR_STATE(
       state, path, glossy_bounce);
   INTEGRATOR_STATE_WRITE(shadow_state, shadow_path, throughput) = throughput;
+  INTEGRATOR_STATE_WRITE(shadow_state, shadow_path, indirect_crypto_id) = INTEGRATOR_STATE(
+      state, path, indirect_crypto_id);
 
   if ((kernel_data.kernel_features & KERNEL_FEATURE_NODE_PORTAL)) {
     INTEGRATOR_STATE_WRITE(shadow_state, shadow_path, portal_bounce) = INTEGRATOR_STATE(
@@ -741,6 +743,10 @@ ccl_device int integrate_surface(KernelGlobals kg,
   ShaderData sd;
   integrate_surface_shader_setup(kg, state, &sd);
   PROFILING_SHADER(sd.object, sd.shader);
+
+  if (INTEGRATOR_STATE(state, path, bounce) == 1) {
+    INTEGRATOR_STATE_WRITE(state, path, indirect_crypto_id) = object_cryptomatte_asset_id(kg, sd.object);
+  }
 
   int continue_path_label = 0;
 
