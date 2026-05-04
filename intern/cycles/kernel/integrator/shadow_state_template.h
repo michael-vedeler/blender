@@ -66,8 +66,8 @@ KERNEL_STRUCT_MEMBER(shadow_path,
                      float,
                      bsdf_eval_average,
                      KernelFeatureRequest(KERNEL_FEATURE_PATH_TRACING, KERNEL_FEATURE_LIGHT_TREE))
-/* Indirect Light Cryptomatte ID. */
-KERNEL_STRUCT_MEMBER(shadow_path, float, indirect_crypto_id, KERNEL_FEATURE_PATH_TRACING)
+/* Indirect Contribution Cryptomatte ID. */
+KERNEL_STRUCT_MEMBER(shadow_path, float, indirect_crypto_object_id, KERNEL_FEATURE_PATH_TRACING)
 KERNEL_STRUCT_END(shadow_path)
 
 /********************************** Shadow Ray *******************************/

@@ -72,13 +72,9 @@ CryptomatteSession::CryptomatteSession(const Main *bmain)
       assets.add_ID(asset_object->id);
     }
 
-    bke::cryptomatte::CryptomatteLayer &indirect = add_layer("CryptoIndirectLight");
+    bke::cryptomatte::CryptomatteLayer &indirect_obj = add_layer("CryptoObjectIndirectContrib");
     for (Object &object : bmain->objects) {
-      Object *asset_object = &object;
-      while (asset_object->parent != nullptr) {
-        asset_object = asset_object->parent;
-      }
-      indirect.add_ID(asset_object->id);
+      indirect_obj.add_ID(object.id);
     }
   }
   if (!BLI_listbase_is_empty(&bmain->materials)) {
@@ -174,17 +170,13 @@ void CryptomatteSession::init(const ViewLayer *view_layer, bool build_meta_data)
     }
   }
 
-  if (cryptoflags & VIEW_LAYER_CRYPTOMATTE_INDIRECT_LIGHT) {
-    bke::cryptomatte::CryptomatteLayer &indirect = add_layer(
-        StringRefNull(view_layer->name) + ".CryptoIndirectLight");
+  if (cryptoflags & VIEW_LAYER_CRYPTOMATTE_OBJ_INDIRECT_CONTRIB) {
+    bke::cryptomatte::CryptomatteLayer &indirect_obj = add_layer(
+        StringRefNull(view_layer->name) + ".CryptoObjectIndirectContrib");
 
     if (build_meta_data) {
       for (Base &base : *object_bases) {
-        const Object *asset_object = base.object;
-        while (asset_object->parent != nullptr) {
-          asset_object = asset_object->parent;
-        }
-        indirect.add_ID(asset_object->id);
+        indirect_obj.add_ID(base.object->id);
       }
     }
   }

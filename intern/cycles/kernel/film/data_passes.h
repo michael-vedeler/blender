@@ -117,7 +117,7 @@ ccl_device_inline void film_write_data_passes(KernelGlobals kg,
         cryptomatte_buffer += film_write_cryptomatte_pass(
             cryptomatte_buffer, kernel_data.film.cryptomatte_depth, id, matte_weight);
       }
-      if (kernel_data.film.cryptomatte_passes & CRYPT_INDIRECT_LIGHT) {
+      if (kernel_data.film.cryptomatte_passes & CRYPT_OBJECT_INDIRECT_CONTRIB) {
         cryptomatte_buffer += kernel_data.film.cryptomatte_depth * 4;
       }
     }

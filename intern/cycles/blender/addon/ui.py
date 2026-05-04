@@ -1151,7 +1151,7 @@ class CYCLES_RENDER_PT_passes_crypto_light(CyclesButtonsPanel, Panel):
         view_layer = context.view_layer
 
         col = layout.column()
-        col.prop(view_layer, "use_pass_cryptomatte_indirect_light", text="Indirect Light")
+        col.prop(view_layer, "use_pass_cryptomatte_object_indirect_contrib", text="Object Indirect Contribution")
 
 
 class CYCLES_RENDER_PT_passes_aov(CyclesButtonsPanel, ViewLayerAOVPanelHelper, Panel):

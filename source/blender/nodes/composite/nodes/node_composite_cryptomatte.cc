@@ -701,8 +701,8 @@ class CryptoMatteOperation : public BaseCryptoMatteOperation {
       else if (type_name == layer_prefix + RE_PASSNAME_CRYPTOMATTE_MATERIAL) {
         cryptomatte_type = RE_PASSNAME_CRYPTOMATTE_MATERIAL;
       }
-      else if (type_name == layer_prefix + "CryptoIndirectLight") {
-        cryptomatte_type = "CryptoIndirectLight";
+      else if (type_name == layer_prefix + "CryptoObjectIndirectContrib") {
+        cryptomatte_type = "CryptoObjectIndirectContrib";
       }
 
       /* Not the view layer used by the node. */

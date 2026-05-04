@@ -721,11 +721,11 @@ void RNA_def_view_layer(BlenderRNA *brna)
   RNA_def_property_update(prop, NC_SCENE | ND_RENDER_OPTIONS, "rna_ViewLayer_pass_update");
 
   /* Light Cryptomatte */
-  prop = RNA_def_property(srna, "use_pass_cryptomatte_indirect_light", PROP_BOOLEAN, PROP_NONE);
+  prop = RNA_def_property(srna, "use_pass_cryptomatte_object_indirect_contrib", PROP_BOOLEAN, PROP_NONE);
   RNA_def_property_boolean_sdna(
-      prop, nullptr, "cryptomatte_flag", VIEW_LAYER_CRYPTOMATTE_INDIRECT_LIGHT);
+      prop, nullptr, "cryptomatte_flag", VIEW_LAYER_CRYPTOMATTE_OBJ_INDIRECT_CONTRIB);
   RNA_def_property_ui_text(
-      prop, "Indirect Light", "Render indirect lightbleed cryptomatte pass");
+      prop, "Object Indirect Contribution", "Render object indirect contribution cryptomatte pass");
   RNA_def_property_update(prop, NC_SCENE | ND_RENDER_OPTIONS, "rna_ViewLayer_pass_update");
 
   /* debug update routine */

@@ -511,8 +511,8 @@ ccl_device_inline void film_write_direct_light(KernelGlobals kg,
   /* Direct light shadow. */
   film_write_combined_pass(kg, path_flag, sample, contribution, buffer);
 
-  if (kernel_data.film.cryptomatte_passes & CRYPT_INDIRECT_LIGHT) {
-    const float stored_id = INTEGRATOR_STATE(state, shadow_path, indirect_crypto_id);
+  if (kernel_data.film.cryptomatte_passes & CRYPT_OBJECT_INDIRECT_CONTRIB) {
+    const float stored_id = INTEGRATOR_STATE(state, shadow_path, indirect_crypto_object_id);
     if (stored_id != 0.0f && INTEGRATOR_STATE(state, shadow_path, bounce) > 0) {
       ccl_global float *crypto_buffer = buffer + kernel_data.film.pass_cryptomatte;
       if (kernel_data.film.cryptomatte_passes & CRYPT_OBJECT) crypto_buffer += kernel_data.film.cryptomatte_depth * 4;
@@ -653,8 +653,8 @@ ccl_device_inline void film_write_background(KernelGlobals kg,
     film_write_combined_transparent_pass(kg, path_flag, sample, contribution, transparent, buffer);
   }
 
-  if (kernel_data.film.cryptomatte_passes & CRYPT_INDIRECT_LIGHT) {
-    const float stored_id = INTEGRATOR_STATE(state, path, indirect_crypto_id);
+  if (kernel_data.film.cryptomatte_passes & CRYPT_OBJECT_INDIRECT_CONTRIB) {
+    const float stored_id = INTEGRATOR_STATE(state, path, indirect_crypto_object_id);
     if (stored_id != 0.0f && INTEGRATOR_STATE(state, path, bounce) > 0) {
       ccl_global float *crypto_buffer = buffer + kernel_data.film.pass_cryptomatte;
       if (kernel_data.film.cryptomatte_passes & CRYPT_OBJECT) crypto_buffer += kernel_data.film.cryptomatte_depth * 4;
@@ -689,8 +689,8 @@ ccl_device_inline void film_write_volume_emission(KernelGlobals kg,
 
   film_write_combined_pass(kg, path_flag, sample, contribution, buffer);
 
-  if (kernel_data.film.cryptomatte_passes & CRYPT_INDIRECT_LIGHT) {
-    const float stored_id = INTEGRATOR_STATE(state, path, indirect_crypto_id);
+  if (kernel_data.film.cryptomatte_passes & CRYPT_OBJECT_INDIRECT_CONTRIB) {
+    const float stored_id = INTEGRATOR_STATE(state, path, indirect_crypto_object_id);
     if (stored_id != 0.0f && INTEGRATOR_STATE(state, path, bounce) > 0) {
       ccl_global float *crypto_buffer = buffer + kernel_data.film.pass_cryptomatte;
       if (kernel_data.film.cryptomatte_passes & CRYPT_OBJECT) crypto_buffer += kernel_data.film.cryptomatte_depth * 4;
@@ -721,8 +721,8 @@ ccl_device_inline void film_write_surface_emission(KernelGlobals kg,
 
   film_write_combined_pass(kg, path_flag, sample, contribution, buffer);
 
-  if (kernel_data.film.cryptomatte_passes & CRYPT_INDIRECT_LIGHT) {
-    const float stored_id = INTEGRATOR_STATE(state, path, indirect_crypto_id);
+  if (kernel_data.film.cryptomatte_passes & CRYPT_OBJECT_INDIRECT_CONTRIB) {
+    const float stored_id = INTEGRATOR_STATE(state, path, indirect_crypto_object_id);
     if (stored_id != 0.0f && INTEGRATOR_STATE(state, path, bounce) > 0) {
       ccl_global float *crypto_buffer = buffer + kernel_data.film.pass_cryptomatte;
       if (kernel_data.film.cryptomatte_passes & CRYPT_OBJECT) crypto_buffer += kernel_data.film.cryptomatte_depth * 4;

@@ -256,7 +256,7 @@ class VIEWLAYER_PT_layer_passes_cryptomatte_light(ViewLayerButtonsPanel, Panel):
         view_layer = context.view_layer
 
         col = layout.column()
-        col.prop(view_layer, "use_pass_cryptomatte_indirect_light", text="Indirect Light")
+        col.prop(view_layer, "use_pass_cryptomatte_object_indirect_contrib", text="Object Indirect Contribution")
 
 
 class VIEWLAYER_MT_lightgroup_sync(Menu):
