@@ -71,6 +71,15 @@ CryptomatteSession::CryptomatteSession(const Main *bmain)
       }
       assets.add_ID(asset_object->id);
     }
+
+    bke::cryptomatte::CryptomatteLayer &indirect = add_layer("CryptoIndirectLight");
+    for (Object &object : bmain->objects) {
+      Object *asset_object = &object;
+      while (asset_object->parent != nullptr) {
+        asset_object = asset_object->parent;
+      }
+      indirect.add_ID(asset_object->id);
+    }
   }
   if (!BLI_listbase_is_empty(&bmain->materials)) {
     bke::cryptomatte::CryptomatteLayer &materials = add_layer(RE_PASSNAME_CRYPTOMATTE_MATERIAL);
@@ -161,6 +170,21 @@ void CryptomatteSession::init(const ViewLayer *view_layer, bool build_meta_data)
             materials.add_ID(material->id);
           }
         }
+      }
+    }
+  }
+
+  if (cryptoflags & VIEW_LAYER_CRYPTOMATTE_INDIRECT_LIGHT) {
+    bke::cryptomatte::CryptomatteLayer &indirect = add_layer(
+        StringRefNull(view_layer->name) + ".CryptoIndirectLight");
+
+    if (build_meta_data) {
+      for (Base &base : *object_bases) {
+        const Object *asset_object = base.object;
+        while (asset_object->parent != nullptr) {
+          asset_object = asset_object->parent;
+        }
+        indirect.add_ID(asset_object->id);
       }
     }
   }
